@@ -1,5 +1,6 @@
 defmodule GraphCommons.Graphs do
   @enforce_keys ~w[data file type]a
+	@derive {Inspect, except: [:path, :uri]}
   defstruct ~w[data file path type uri]a
 
 	@type graph_data :: String.t()
