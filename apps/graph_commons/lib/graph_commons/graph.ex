@@ -4,6 +4,7 @@ defmodule GraphCommons.Graph do
   @derive {Inspect, except: [:path, :uri]}
   defstruct ~w[data file path type uri]a
 
+  @type file_test :: GraphCommons.file_test()
   @type graph_data :: String.t()
   @type graph_file :: String.t()
   @type graph_path :: String.t()
@@ -72,5 +73,36 @@ defmodule GraphCommons.Graph do
     graphs_dir = "#{@storage_dir}/#{graph_type}/graphs/"
     File.write!(graphs_dir <> graph_file, graph_data)
     new(graph_data, graph_file, graph_type)
+  end
+
+  def list_graphs(graph_type, file_test \\ :exists?) do
+    list_graphs_dir("", graph_type, file_test)
+  end
+
+  def list_graphs_dir(graph_file, graph_type, file_test \\ :exists?) do
+    path = "#{@storage_dir}/#{graph_type}/graphs/"
+
+    (path <> graph_file)
+    |> File.ls!()
+    |> _filter(path, file_test)
+    |> Enum.sort()
+    |> Enum.map(fn f ->
+      File.dir?(path <> f)
+      |> case do
+        true -> "#{String.upcase(f)}"
+        false -> f
+      end
+    end)
+  end
+
+  defp _filter(files, path, file_test) do
+    files
+    |> Enum.filter(fn f ->
+      case file_test do
+        :dir? -> File.dir?(path <> f)
+        :regular? -> File.regular?(path <> f)
+        :exists? -> true
+      end
+    end)
   end
 end
