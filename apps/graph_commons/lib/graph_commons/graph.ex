@@ -58,4 +58,19 @@ defmodule GraphCommons.Graph do
       uri: "file://" <> graph_path
     }
   end
+
+  def read_graph(graph_file, graph_type) when graph_file != "" and is_graph_type(graph_type) do
+    graphs_dir = "#{@storage_dir}/#{graph_type}/graphs/"
+    graph_data = File.read!(graphs_dir <> graph_file)
+
+    new(graph_data, graph_file, graph_type)
+  end
+
+  def write_graph(graph_data, graph_file, graph_type)
+      when graph_data != "" and
+             graph_file != "" and is_graph_type(graph_type) do
+    graphs_dir = "#{@storage_dir}/#{graph_type}/graphs/"
+    File.write!(graphs_dir <> graph_file, graph_data)
+    new(graph_data, graph_file, graph_type)
+  end
 end
