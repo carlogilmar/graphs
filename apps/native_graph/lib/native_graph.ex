@@ -1,6 +1,5 @@
 defmodule NativeGraph do
   use GraphCommons.Graph, graph_type: :native, graph_module: __MODULE__
-  use GraphCommons.Query, graph_type: :native, graph_module: __MODULE__
 
   def read_graph(graph_file), do: GraphCommons.Graph.read_graph(graph_file, :native)
 
