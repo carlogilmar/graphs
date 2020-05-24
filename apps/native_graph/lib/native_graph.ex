@@ -1,18 +1,7 @@
 defmodule NativeGraph do
-  @moduledoc """
-  Documentation for `NativeGraph`.
-  """
 
-  @doc """
-  Hello world.
+	def read_graph(graph_file), do: GraphCommons.Graph.read_graph(graph_file, :native)
 
-  ## Examples
+	def write_graph(graph_data, graph_file), do: GraphCommons.Graph.write_graph(graph_data, graph_file, :native)
 
-      iex> NativeGraph.hello()
-      :world
-
-  """
-  def hello do
-    :world
-  end
 end
