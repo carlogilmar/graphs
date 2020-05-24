@@ -21,7 +21,11 @@ defmodule GraphCommons.Graph do
 	defmacro __using__(opts) do
 		graph_type = Keyword.get(opts, :graph_type) graph_module = Keyword.get(opts, :graph_module)
 		quote do
-			# functions here
+			# other (listings, new_graph) functions here
+			def read_graph(graph_file),
+				do: GraphCommons.Graph.read_graph(graph_file, unquote(graph_type))
+			def write_graph(graph_data, graph_file),
+				do: GraphCommons.Graph.write_graph(graph_data, graph_file, unquote(graph_type))
 		end
 	end
 
