@@ -18,16 +18,19 @@ defmodule GraphCommons.Graph do
           uri: graph_uri
         }
 
-	defmacro __using__(opts) do
-		graph_type = Keyword.get(opts, :graph_type) graph_module = Keyword.get(opts, :graph_module)
-		quote do
-			# other (listings, new_graph) functions here
-			def read_graph(graph_file),
-				do: GraphCommons.Graph.read_graph(graph_file, unquote(graph_type))
-			def write_graph(graph_data, graph_file),
-				do: GraphCommons.Graph.write_graph(graph_data, graph_file, unquote(graph_type))
-		end
-	end
+  defmacro __using__(opts) do
+    graph_type = Keyword.get(opts, :graph_type)
+    graph_module = Keyword.get(opts, :graph_module)
+
+    quote do
+      # other (listings, new_graph) functions here
+      def read_graph(graph_file),
+        do: GraphCommons.Graph.read_graph(graph_file, unquote(graph_type))
+
+      def write_graph(graph_data, graph_file),
+        do: GraphCommons.Graph.write_graph(graph_data, graph_file, unquote(graph_type))
+    end
+  end
 
   defimpl Inspect, for: __MODULE__ do
     @slice 16
