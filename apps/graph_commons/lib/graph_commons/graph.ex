@@ -18,6 +18,13 @@ defmodule GraphCommons.Graph do
           uri: graph_uri
         }
 
+	defmacro __using__(opts) do
+		graph_type = Keyword.get(opts, :graph_type) graph_module = Keyword.get(opts, :graph_module)
+		quote do
+			# functions here
+		end
+	end
+
   defimpl Inspect, for: __MODULE__ do
     @slice 16
     @quote <<34>>
