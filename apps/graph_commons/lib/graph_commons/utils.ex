@@ -6,4 +6,5 @@ defmodule GraphCommons.Utils do
     end
   end
 
+  def libgraph!(query_string), do: to_query_graph!(NativeGraph, query_string)
 end
