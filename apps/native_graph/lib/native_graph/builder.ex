@@ -20,4 +20,11 @@ defmodule NativeGraph.Builder do
 		)
 	end
 
+	defp _evaluate(n, m) do
+		case Integer.is_even(Kernel.trunc(System.os_time() / 1000)) do
+			true -> [n, m]
+			false -> nil
+		end
+	end
+
 end
