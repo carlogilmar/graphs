@@ -1,4 +1,5 @@
 defmodule NativeGraph.Builder do
+	require Integer
 
 	def random_graph(limit) do # start
 		s=1
@@ -21,7 +22,8 @@ defmodule NativeGraph.Builder do
 	end
 
 	defp _evaluate(n, m) do
-		case Integer.is_even(Kernel.trunc(System.os_time() / 1000)) do
+		number = Kernel.trunc(System.os_time() / 1000)
+		case Integer.is_even(number) do
 			true -> [n, m]
 			false -> nil
 		end
