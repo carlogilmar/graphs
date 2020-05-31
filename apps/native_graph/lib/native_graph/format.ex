@@ -1,4 +1,4 @@
-defmodule Format do
+defmodule NativeGraph.Format do
 	@graph_images_dir GraphCommons.storage_dir() <> "/native/graphs/images/"
 	@binary_dir "/usr/local/bin"
 	@type layout :: :dot | :neato | :twopi | :circo | :fdp | :sfdp | :patchwork | :osage
