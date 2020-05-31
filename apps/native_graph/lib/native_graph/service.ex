@@ -9,5 +9,15 @@ defmodule NativeGraph.Service do
 	# functions for managing Agent process
 	## BEHAVIOUR
 	# functions implementing graph service callbacks
+
+	def start_link(_ex) do
+		:dets.open_file(:ex_graphs_book, [{:file, @dets_table}])
+		:dets.member(:ex_graphs_book, :graph) |> case do
+			true ->
+				[graph: g] = :dets.lookup(:ex_graphs_book, :graph) Agent.start_link(fn -> g end, name: __MODULE__)
+			false ->
+				Agent.start_link(fn -> %Graph{} end, name: __MODULE__)
+		end
+	end
 end
 
