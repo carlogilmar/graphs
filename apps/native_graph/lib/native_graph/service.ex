@@ -14,10 +14,16 @@ defmodule NativeGraph.Service do
 		:dets.open_file(:ex_graphs_book, [{:file, @dets_table}])
 		:dets.member(:ex_graphs_book, :graph) |> case do
 			true ->
-				[graph: g] = :dets.lookup(:ex_graphs_book, :graph) Agent.start_link(fn -> g end, name: __MODULE__)
+				[graph: g] = :dets.lookup(:ex_graphs_book, :graph)
+				Agent.start_link(fn -> g end, name: __MODULE__)
 			false ->
 				Agent.start_link(fn -> %Graph{} end, name: __MODULE__)
 		end
+	end
+
+	def stop() do
+		Agent.stop(__MODULE__)
+		:dets.close(:ex_graphs_book)
 	end
 end
 
