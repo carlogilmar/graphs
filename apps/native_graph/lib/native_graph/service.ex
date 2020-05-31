@@ -44,5 +44,22 @@ defmodule NativeGraph.Service do
 		g = graph.data |> eval Agent.update(__MODULE__, fn _state -> g end)
 		:dets.insert(:ex_graphs_book, graph: g)
 	end
+
+	def query_graph(%GraphCommons.Query{} = query) do
+		:native = query.type
+		result =
+			eval(
+				"import Graph; import Enum; NativeGraph.graph_read |> (#{query.data})"
+			)
+		{:ok, result}
+	end
+
+	def query_graph!(%GraphCommons.Query{} = query) do
+		:native = query.type
+		eval(
+			"import Graph; import Enum; NativeGraph.graph_read |> (#{query.data})"
+		)
+	end
+
 end
 
