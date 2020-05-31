@@ -61,5 +61,23 @@ defmodule NativeGraph.Service do
 		)
 	end
 
+	def graph_info() do
+		g = graph_read()
+		info = Graph.info(g)
+		labels =
+			Graph.vertices(g)
+			|> Enum.reduce([], fn v, acc -> acc ++ Graph.vertex_labels(g, v) end)
+			|> Enum.uniq()
+			|> Enum.sort()
+
+		%GraphCommons.Service.GraphInfo{
+			type: :native,
+			num_nodes: info.num_vertices,
+			num_edges: info.num_edges,
+			density: _density(info.num_vertices, info.num_edges),
+			labels: labels
+		}
+	end
+
 end
 
