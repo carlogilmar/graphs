@@ -1,6 +1,7 @@
 defmodule NativeGraph.Service do
 	@moduledoc """
-	Module implementing graph store behaviour for native graphs. """
+	Module implementing graph store behaviour for native graphs.
+	"""
 	@behaviour GraphCommons.Service
 	use Agent
 	import GraphCommons.Utils, only: [eval: 1]
@@ -77,6 +78,10 @@ defmodule NativeGraph.Service do
 			density: _density(info.num_vertices, info.num_edges),
 			labels: labels
 		}
+	end
+
+	defp _density(n, m) do
+		if n > 0, do: Float.round(m / (n * (n - 1)), 3), else: 0.0
 	end
 
 end
