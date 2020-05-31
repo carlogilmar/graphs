@@ -25,5 +25,24 @@ defmodule NativeGraph.Service do
 		Agent.stop(__MODULE__)
 		:dets.close(:ex_graphs_book)
 	end
+
+	def graph_create(graph) do
+		graph_delete()
+		graph_update(graph)
+	end
+
+	def graph_delete() do
+		Agent.update(__MODULE__, fn _state -> %Graph{} end)
+		:dets.delete(:ex_graphs_book, :graph)
+	end
+
+	def graph_read() do
+		Agent.get(__MODULE__, & &1)
+	end
+
+	def graph_update(graph) do
+		g = graph.data |> eval Agent.update(__MODULE__, fn _state -> g end)
+		:dets.insert(:ex_graphs_book, graph: g)
+	end
 end
 
